@@ -17,9 +17,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log("HELLO WORLD")
     axios.get('https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json').then(res => {
-      console.log(res.data.pokemon)
       let types = []
       let weaknesses = []
       res.data.pokemon.forEach(pokemon => {
@@ -34,7 +32,6 @@ class App extends React.Component {
           }
         })
       })
-      console.log("setting: ", {types})
       this.setState({
         pokemons: res.data.pokemon,
         weaknesses,
@@ -45,12 +42,10 @@ class App extends React.Component {
 
   render() {
     const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
-    console.log(this.state.weaknessFilters)
     const filteredPokemons = this.state.pokemons
       .filter(pokemon => pokemon.name.toLowerCase().includes(this.state.textSearch.toLowerCase()))
       .filter(pokemon => this.state.typeFilters.every(type => pokemon.type.includes(type)))
       .filter(pokemon => this.state.weaknessFilters.every(weakness => pokemon.weaknesses.includes(weakness)))
-    console.log(filteredPokemons)
     const pokemons = filteredPokemons.map(
       (pokemon) =>
         <li style={{border: '1px solid green'}}>
